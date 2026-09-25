@@ -24,15 +24,15 @@ const FAQS = [
 ]
 
 export function Faq() {
-  const openRef = useRef(FAQS.map((f) => f.q))
+  const openRef = useRef<string[]>([])
   return (
     <Section name="faq" id="faq" className="py-20 md:py-28">
       <div className="flex flex-col gap-10 md:flex-row md:gap-16 lg:gap-24">
         <SectionTitle className="leading-[1.05] md:w-[300px] md:shrink-0 xl:w-[400px]">Questions subro teams ask</SectionTitle>
-        {/* The design shows every answer; all start open and visitors can still collapse them. */}
+        {/* All questions start closed; visitors open the ones they care about. */}
         <Accordion
           type="multiple"
-          defaultValue={FAQS.map((f) => f.q)}
+          defaultValue={[]}
           className="flex-1 border-t border-border"
           onValueChange={(open) => {
             // Report the question whose state changed.
