@@ -141,28 +141,51 @@ takes 15–60 minutes after the first `pulumi up`. Until then, HTTPS on the doma
 
 ### First deploy
 
+No `pulumi login`, no Pulumi Cloud account and no service-account key files. `infra/Pulumi.yaml`
+keeps the state in a GCS bucket in the `amyconnects` project, secrets in that state are encrypted
+with Cloud KMS, and deploys run as a dedicated service account that you impersonate.
+
 ```sh
 cd infra
-python3 -m venv venv && venv/bin/pip install -r requirements.txt
-gcloud auth application-default login          # Pulumi uses Application Default Credentials
-pulumi login                                   # or: pulumi login gs://<state-bucket>
-pulumi stack init prod                         # config lives in Pulumi.prod.yaml
-pulumi config set posthogKey phc_...
-pulumi config set formsEndpoint https://script.google.com/macros/s/.../exec
-pulumi up
+gcloud auth application-default login     # sign in as your @amyconnects.ai account
+./bootstrap.sh                            # once, by someone who can manage IAM (see below)
+git add Pulumi.prod.yaml && git commit -m "chore(infra): init prod stack"
+./pulumi.sh config set posthogKey phc_...
+./pulumi.sh config set formsEndpoint https://script.google.com/macros/s/.../exec
+./pulumi.sh up
 ```
 
-Redeploy after code changes by running `pulumi up` again. Docker must be running, because the
-image is built locally.
+Always run Pulumi through `./pulumi.sh`. It builds a short-lived impersonation credential from
+your Application Default Credentials, so the state bucket, the KMS key and every GCP call act as
+`amy-landing-deployer`. Your own `gcloud` login is untouched.
+
+`bootstrap.sh` (safe to re-run) creates:
+
+- **`amy-landing-deployer@`**: runs deploys. It has Cloud Run Admin, Artifact Registry Admin,
+  DNS Admin, Compute Load Balancer Admin and Service Usage Admin on the project, Storage Admin
+  **only on the state bucket** (IAM condition), and Encrypter/Decrypter on the KMS key.
+- **`amy-landing-run@`**: the identity the container runs as, with no roles. The deployer may
+  only "act as" this account.
+- **Who can deploy:** the person who runs the bootstrap gets Service Account Token Creator on the
+  deployer. To let a teammate deploy, grant them the same role:
+  `gcloud iam service-accounts add-iam-policy-binding amy-landing-deployer@amyconnects.iam.gserviceaccount.com --member user:NAME@amyconnects.ai --role roles/iam.serviceAccountTokenCreator`
+- **State and secrets:** the private, versioned bucket `gs://amyconnects-pulumi-state`, and the
+  KMS key `pulumi/amy-landing`.
+- **The `prod` stack**, created with the KMS secrets provider. Commit the `secretsprovider` and
+  `encryptedkey` lines it adds to `Pulumi.prod.yaml`.
+
+Running the bootstrap needs permission to manage IAM in the project (Project IAM Admin or
+Owner), plus Storage and Cloud KMS admin. Deploying only needs Token Creator on the deployer.
+
+Redeploy after code changes with `./pulumi.sh up`. Docker must be running, because the image is
+built locally. A `failed to get regions list` warning is expected and harmless: the deployer
+deliberately can't list Compute regions.
 
 Other config (see `Pulumi.prod.yaml`): `domain`, `dnsZone`, `serviceName`, `minInstances`
 (set to 1 to avoid cold starts) and `maxInstances`.
 
-The deploying account needs roughly these roles on the `amyconnects` project: Cloud Run Admin,
-Artifact Registry Administrator, DNS Administrator, Service Usage Admin, Service Account User,
-and (for the `loadbalancer` mode) Compute Load Balancer Admin. Making the service public
-(`allUsers` gets `roles/run.invoker`) fails if an organization policy restricts public
-members.
+Making the service public (`allUsers` gets `roles/run.invoker`) fails if an organization policy
+restricts public members.
 
 ## Switching to the custom domain
 

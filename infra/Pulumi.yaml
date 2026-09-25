@@ -1,7 +1,13 @@
 name: amy-landing
-description: Amy landing page on Cloud Run, served on an amyconnects.ai subdomain
+description: Amy landing page on Cloud Run, served on www.amyconnects.ai
 runtime:
   name: python
   options:
     toolchain: pip
     virtualenv: venv
+# State lives in a GCS bucket in the amyconnects project, so there's no `pulumi login` and no
+# Pulumi Cloud account. Access uses your gcloud Application Default Credentials. Secrets in the
+# state are encrypted with Cloud KMS (see secretsprovider in Pulumi.prod.yaml).
+# Create both once with ./bootstrap.sh.
+backend:
+  url: gs://amyconnects-pulumi-state/amy-landing
