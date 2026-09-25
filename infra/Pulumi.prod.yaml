@@ -14,3 +14,8 @@ config:
   # Set these with `pulumi config set` (public values, baked into the JS bundle):
   #   amy-landing:posthogKey    phc_...
   #   amy-landing:formsEndpoint https://script.google.com/macros/s/.../exec
+
+  amy-landing:posthogKey: phc_wRJgoGXxPTsQbJdjnGhkemUvQsJYQopYj7f9imbuk6Fk
+  amy-landing:formsEndpoint: https://script.google.com/macros/s/AKfycbzCRN4aGJPDrDI3sDsSTuZg9ctgp3j3hvERutrSJrpCKyzvm0K4aHXc0ZdIGuNERFsJ/exec
+secretsprovider: gcpkms://projects/amyconnects/locations/global/keyRings/pulumi/cryptoKeys/amy-landing
+encryptedkey: CiQANP1fdchQlAOF6dbX6Nq4FNBgRdpcNr2ycbplrOaQGdMSho4SSQAwVMnepL/lmvZSgT/haJVQz6gw6xH5/+exUMl1Yc1BToaRpSYne3S2kxIpmRBgDd9brG+xvbzomvNBVon6hr+dsIU5pB1U8bA=
