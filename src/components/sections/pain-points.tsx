@@ -94,9 +94,9 @@ export function PainPoints() {
           <Photo src={paperwork} alt="Two colleagues reviewing a file on a laptop in an office" />
           <PainCopy
             n={1}
-            title="Chasing your insured client for documents"
+            title="Chasing the insured and other parties for documents"
             problem="Problem: The package arrives without proof of payment, a liability investigation or the other party's insurance details. Someone then spends a week of emails chasing them. Without them, you can't collect."
-            solution="The Solution: Amy reads the file, emails the insured a list of exactly what's missing and keeps following up until it arrives. Each document is filed to the claim as it comes in."
+            solution="The Solution: Amy reads the file, emails the insureds, carriers, and third parties a list of exactly what's missing and keeps following up until it arrives. Each document is filed to the case as it comes in."
           />
         </Row>
 
@@ -105,7 +105,7 @@ export function PainPoints() {
             n={2}
             title="Guessing whether your evidence is enough"
             problem="The Problem: Police reports state facts, not fault. A repair estimate isn't proof of payment. If you take a file to arbitration without a real liability investigation, 50/50 is the best you can hope for."
-            solution="The Solution: You get a yes or a no. A no names the missing item, so your team stops working files that can't be collected."
+            solution="The Solution: You get a yes or a no, and an evidence breakdown. So your team stops working on files that can't be collected."
           />
           <ChecklistCard />
         </Row>
@@ -114,7 +114,7 @@ export function PainPoints() {
           <PainCopy
             n={3}
             title="Hours on the phone reporting the claim"
-            problem="The Problem: Every carrier does intake differently. You could be spending hours talking to an AI chatbot over the phone, or a rep who doesn't particularly want to be there. Your team reads the same facts from the file to each one, then waits on hold for the next."
+            problem="The Problem: Every carrier does intake differently. You could be spending hours talking to an AI chatbot over the phone, or bouncing between reps finding the correct department. Your team reads the same facts from the file to each one, then waits on hold for the next."
             solution="The Solution: Amy reports the claim to the adverse carrier using the facts already in your file. It then sends the demand and follows up every 10 days until the carrier replies. When it does, Amy pauses and hands the file back to your adjuster."
           />
           <Photo src={phone} alt="A call-center headset next to a laptop" />
