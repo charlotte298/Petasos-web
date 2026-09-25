@@ -1,0 +1,103 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+
+/* Tokens mirror the variables in designs/petasos-landing.pen. Light only. */
+@theme inline {
+  --font-heading: "Fraunces Variable", Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-tint: var(--primary-tint);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-night: var(--night);
+  --color-night-muted: var(--night-muted);
+  --color-success: var(--success);
+  --color-success-tint: var(--success-tint);
+  --color-placeholder: var(--placeholder);
+  --color-skeleton: var(--skeleton);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}
+
+:root {
+  --background: #f5f2ec; /* bg */
+  --foreground: #13202a; /* ink */
+  --card: #ffffff; /* paper */
+  --card-foreground: #13202a;
+  --popover: #ffffff;
+  --popover-foreground: #13202a;
+  --primary: #e2572c; /* accent */
+  /* White on #E2572C is 3.7:1, under AA for 15–17px labels. Filled buttons use this
+     slightly deeper accent (4.7:1). */
+  --primary-strong: #c94a22;
+  --primary-foreground: #ffffff;
+  --primary-tint: #fbe9e2;
+  --secondary: #f5f2ec;
+  --secondary-foreground: #13202a;
+  --muted: #f5f2ec;
+  --muted-foreground: #55616b; /* muted: 5.7:1 on bg, 6.4:1 on paper */
+  --accent: #f5f2ec;
+  --accent-foreground: #13202a;
+  --destructive: #b42318;
+  --border: #dcd6cb; /* line */
+  --input: #dcd6cb;
+  --ring: #e2572c;
+  --radius: 6px;
+  --night: #0f1b24;
+  --night-muted: #a9b4bc;
+  --success: #2f7a4b;
+  --success-tint: #e7f0ea;
+  /* The .pen uses #8A949C (3.1:1) for placeholders; darkened to pass AA. */
+  --placeholder: #6b757d;
+  --skeleton: #e8e3da;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: clip;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}

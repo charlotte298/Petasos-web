@@ -1,0 +1,55 @@
+import { useRef } from "react"
+import { Section, SectionTitle } from "@/components/section"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { track } from "@/lib/analytics"
+
+const FAQS = [
+  { q: "Do we have to switch systems?", a: "No. Petasos works over email. CC it on the claim thread." },
+  {
+    q: "Does Petasos negotiate settlements?",
+    a: "No. Petasos prepares, reports and follows up. Your adjusters negotiate.",
+  },
+  {
+    q: "What if a file isn't ready?",
+    a: "Petasos tells you no and lists the missing items. It won't send a demand until the file is complete.",
+  },
+  {
+    q: "Which carriers can Petasos report to?",
+    a: "Any carrier. Petasos also checks whether the adverse carrier belongs to arbitration, so you know early whether the file can go to arbitration or would have to be litigated.",
+  },
+  {
+    q: "Is Petasos a law firm?",
+    a: "No. Petasos doesn't give legal advice, and your team reviews every demand before it goes out.",
+  },
+]
+
+export function Faq() {
+  const openRef = useRef(FAQS.map((f) => f.q))
+  return (
+    <Section name="faq" id="faq" className="py-20 md:py-28">
+      <div className="flex flex-col gap-10 md:flex-row md:gap-16 lg:gap-24">
+        <SectionTitle className="leading-[1.05] md:w-[300px] md:shrink-0 xl:w-[400px]">Questions subro teams ask</SectionTitle>
+        {/* The design shows every answer; all start open and visitors can still collapse them. */}
+        <Accordion
+          type="multiple"
+          defaultValue={FAQS.map((f) => f.q)}
+          className="flex-1 border-t border-border"
+          onValueChange={(open) => {
+            // Report the question whose state changed.
+            const prev = new Set(openRef.current)
+            const changed = FAQS.find((f) => prev.has(f.q) !== open.includes(f.q))
+            openRef.current = open
+            if (changed) track("faq_toggled", { question: changed.q })
+          }}
+        >
+          {FAQS.map(({ q, a }) => (
+            <AccordionItem key={q} value={q} className="py-7">
+              <AccordionTrigger className="text-lg leading-6 font-semibold text-foreground md:text-xl">{q}</AccordionTrigger>
+              <AccordionContent className="pt-2.5 text-[17px] leading-[1.6] text-muted-foreground">{a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </Section>
+  )
+}
