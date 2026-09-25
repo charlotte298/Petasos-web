@@ -33,6 +33,11 @@ apex = domain.removeprefix("www.") if domain.startswith("www.") else None
 if apex and redirect_apex is False:
     apex = None
 service_name = config.get("serviceName") or "amy-landing"
+# Identity the container runs as. bootstrap.sh creates it with no roles: the site needs none, and
+# the Compute Engine default account Cloud Run would otherwise use is usually highly privileged.
+runtime_service_account = (
+    config.get("runtimeServiceAccount") or f"amy-landing-run@{project}.iam.gserviceaccount.com"
+)
 min_instances = config.get_int("minInstances") or 0
 max_instances = config.get_int("maxInstances") or 3
 
@@ -114,6 +119,7 @@ service = gcp.cloudrunv2.Service(
     ),
     deletion_protection=False,
     template=gcp.cloudrunv2.ServiceTemplateArgs(
+        service_account=runtime_service_account,
         scaling=gcp.cloudrunv2.ServiceTemplateScalingArgs(
             min_instance_count=min_instances,
             max_instance_count=max_instances,
