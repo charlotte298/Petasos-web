@@ -1,13 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/inter";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource-variable/dm-sans";
 
-/* Tokens mirror the variables in designs/petasos-landing.pen. Light only. */
+/* Tokens follow the Amy Connects brand (amyconnects-infra frontend). Light only. */
 @theme inline {
-  --font-heading: "Fraunces Variable", Georgia, serif;
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -41,36 +43,35 @@
 }
 
 :root {
-  --background: #f5f2ec; /* bg */
-  --foreground: #13202a; /* ink */
-  --card: #ffffff; /* paper */
-  --card-foreground: #13202a;
-  --popover: #ffffff;
-  --popover-foreground: #13202a;
-  --primary: #e2572c; /* accent */
-  /* White on #E2572C is 3.7:1, under AA for 15–17px labels. Filled buttons use this
-     slightly deeper accent (4.7:1). */
-  --primary-strong: #c94a22;
+  --background: #f4f2ee;
+  --foreground: #1c1718;
+  --card: #fcfbfa;
+  --card-foreground: #1c1718;
+  --popover: #fcfbfa;
+  --popover-foreground: #1c1718;
+  --primary: #ff6b4a; /* Amy coral */
+  /* White on #FF6B4A is 2.8:1, under AA. Filled buttons and small coral text use this
+     deeper coral (5.4:1 with white, 4.8:1 on the background). */
+  --primary-strong: #c03c1c;
   --primary-foreground: #ffffff;
-  --primary-tint: #fbe9e2;
-  --secondary: #f5f2ec;
-  --secondary-foreground: #13202a;
-  --muted: #f5f2ec;
-  --muted-foreground: #55616b; /* muted: 5.7:1 on bg, 6.4:1 on paper */
-  --accent: #f5f2ec;
-  --accent-foreground: #13202a;
+  --primary-tint: #ffe9e3;
+  --secondary: #eae6df;
+  --secondary-foreground: #1c1718;
+  --muted: #eae6df;
+  --muted-foreground: #564f4f; /* 7.2:1 on background, 7.7:1 on card */
+  --accent: #eae6df;
+  --accent-foreground: #1c1718;
   --destructive: #b42318;
-  --border: #dcd6cb; /* line */
-  --input: #dcd6cb;
-  --ring: #e2572c;
-  --radius: 6px;
-  --night: #0f1b24;
-  --night-muted: #a9b4bc;
+  --border: #e0dacf;
+  --input: #e0dacf;
+  --ring: #c03c1c;
+  --radius: 8px;
+  --night: #1c1718;
+  --night-muted: #a79fa0; /* 6.8:1 on night */
   --success: #2f7a4b;
   --success-tint: #e7f0ea;
-  /* The .pen uses #8A949C (3.1:1) for placeholders; darkened to pass AA. */
-  --placeholder: #6b757d;
-  --skeleton: #e8e3da;
+  --placeholder: #6b6464; /* 5.6:1 on card */
+  --skeleton: #eae6df;
 }
 
 @layer base {

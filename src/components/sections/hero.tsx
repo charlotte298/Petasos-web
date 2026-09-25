@@ -22,7 +22,7 @@ export function Hero() {
             Subrogation made simple
           </h1>
           <p className="max-w-[540px] text-lg leading-[1.5] text-muted-foreground md:text-xl">
-            Petasos collects the documents from your insured, tells you whether the file has enough to win, and reports
+            Amy collects the documents from your insured, tells you whether the file has enough to win, and reports
             the claim to the adverse carrier.
           </p>
           <div className="flex flex-col gap-3.5 sm:flex-row sm:flex-wrap sm:items-center">
@@ -56,7 +56,7 @@ export function Hero() {
           />
           <Card
             aria-label="Example claim status"
-            className="relative z-10 mx-4 -mt-20 gap-4 p-5 shadow-[0_12px_40px_#13202A26] sm:absolute sm:bottom-4 sm:left-4 sm:mx-0 sm:mt-0 sm:w-[340px] sm:p-6 md:bottom-auto md:-left-14 md:top-[62.6%]"
+            className="relative z-10 mx-4 -mt-20 gap-4 p-5 shadow-[0_12px_40px_#1C171826] sm:absolute sm:bottom-4 sm:left-4 sm:mx-0 sm:mt-0 sm:w-[340px] sm:p-6 md:bottom-auto md:-left-14 md:top-[62.6%]"
           >
             <p className="text-[13px] leading-4 font-semibold tracking-[0.4px] text-muted-foreground">Claim #SUB-2041</p>
             <ul className="flex flex-col gap-4">

@@ -8,7 +8,7 @@ export function Negotiation() {
           Negotiation stays with your adjusters.
         </h2>
         <p className="max-w-[640px] text-lg leading-[1.6] text-muted-foreground md:text-xl">
-          Petasos handles the paperwork and the phone queues. Your adjusters handle the conversation that gets the check
+          Amy handles the paperwork and the phone queues. Your adjusters handle the conversation that gets the check
           signed.
         </p>
       </div>

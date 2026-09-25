@@ -6,7 +6,7 @@ submission. There is no other backend.
 
 ## 1. Create the Sheet
 
-1. Create a new Google Sheet in the Petasos Drive, for example **Petasos — landing page leads**.
+1. Create a new Google Sheet in the Amy Drive, for example **Amy — landing page leads**.
 2. You don't need to add tabs or headers. The script creates a `beta` tab and a
    `sample_letter` tab, each with a bold, frozen header row, the first time that form is
    submitted.
@@ -16,7 +16,7 @@ submission. There is no other backend.
 1. In the Sheet, open **Extensions → Apps Script**.
 2. Delete the placeholder `Code.gs` contents and paste in [`apps-script/Code.gs`](../apps-script/Code.gs)
    from this repo.
-3. Save the file. Naming the project something like "Petasos forms" makes it easier to find later.
+3. Save the file. Naming the project something like "Amy forms" makes it easier to find later.
 
 ## 3. Deploy as a web app
 

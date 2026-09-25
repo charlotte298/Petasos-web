@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
           const pick = (re: RegExp) => files.find((f) => re.test(f))
           const hero = pick(/hero-truck-(?!640).*\.webp$/)
           const hero640 = pick(/hero-truck-640-.*\.webp$/)
-          const fonts = [pick(/inter-latin-wght-normal-.*\.woff2$/), pick(/fraunces-latin-wght-normal-.*\.woff2$/)]
+          const fonts = [pick(/dm-sans-latin-wght-normal-.*\.woff2$/), pick(/poppins-latin-600-normal-.*\.woff2$/)]
           return [
             ...(hero
               ? [

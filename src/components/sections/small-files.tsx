@@ -21,7 +21,7 @@ export function SmallFiles() {
             Find lost money
           </h2>
           <p className="text-[17px] leading-[1.6] text-muted-foreground md:text-lg">
-            A $2,000 demand takes nearly as much work as a $100,000 one. With Petasos doing the reporting and follow-ups,
+            A $2,000 demand takes nearly as much work as a $100,000 one. With Amy doing the reporting and follow-ups,
             you can pursue the whole backlog, not only the large files.
           </p>
           <div className="flex flex-col gap-6">

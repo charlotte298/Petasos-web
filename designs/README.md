@@ -12,7 +12,7 @@ IDs are listed in the main [README](../README.md).
 
 Known differences between the .pen and the live site:
 
-- The footer in the .pen still says "Amy". The site says "Petasos".
+- The site is now branded Amy (Amy Connects). The .pen file still uses the older Petasos styling and name in places.
 - Accent buttons on the site use `#C94A22`, and form placeholders use `#6B757D`. The .pen uses
   `#E2572C` and `#8A949C`. The site's darker colors meet WCAG AA contrast.
 - The .pen only has a desktop frame. The site's mobile and tablet layouts are defined in code.
