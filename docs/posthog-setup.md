@@ -12,8 +12,8 @@ the console as `[analytics] …`.
 2. Set these as GitHub repo **variables**, not secrets:
    - `VITE_POSTHOG_KEY` = the `phc_…` key
    - `VITE_POSTHOG_HOST` = `https://us.i.posthog.com`
-3. In **Project settings**, find **Authorized URLs** (used by the toolbar and web analytics) and add
-   `https://charlotte298.github.io`. Add the custom domain as well once it's live.
+3. In **Settings → Web analytics → Web analytics domains**, add `https://charlotte298.github.io`
+   (done 2026-09-25). Add the custom domain as well once it's live.
 
 Init settings, in `src/lib/analytics.ts`: autocapture on, pageview capture on,
 `person_profiles: "identified_only"`.

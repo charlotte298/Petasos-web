@@ -110,6 +110,6 @@ The domain hasn't been chosen yet. When it is:
 5. **Update the OG/canonical URLs.** These follow `public/CNAME` automatically. Set
    `VITE_SITE_URL` only if the canonical URL should differ from the CNAME. Afterwards, check the
    deployed `<head>` and re-scrape a link in a social-card debugger.
-6. **Add the domain to PostHog** under Project settings → Authorized URLs.
+6. **Add the domain to PostHog** under Settings → Web analytics → Web analytics domains.
 
 Then push to `main`, or re-run the workflow.
