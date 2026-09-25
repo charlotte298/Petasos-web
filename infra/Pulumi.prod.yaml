@@ -1,0 +1,16 @@
+config:
+  gcp:project: amyconnects
+  gcp:region: us-central1
+  # Public hostname for the landing page. Because it starts with "www.", the load balancer
+  # also serves amyconnects.ai and 301-redirects it here (set redirectApex: false to skip).
+  amy-landing:domain: www.amyconnects.ai
+  # Cloud DNS managed zone that holds amyconnects.ai.
+  amy-landing:dnsZone: amyconnects
+  # "loadbalancer" (default): global HTTPS load balancer + Google-managed cert + Cloud CDN.
+  # "mapping": Cloud Run domain mapping. Cheaper, but the deploying account must be a
+  # verified owner of amyconnects.ai in Search Console.
+  amy-landing:domainMode: loadbalancer
+  amy-landing:posthogHost: https://us.i.posthog.com
+  # Set these with `pulumi config set` (public values, baked into the JS bundle):
+  #   amy-landing:posthogKey    phc_...
+  #   amy-landing:formsEndpoint https://script.google.com/macros/s/.../exec
