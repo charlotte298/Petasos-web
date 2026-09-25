@@ -3,7 +3,7 @@
 The marketing site for Petasos for Subrogation. It's a single static page built with Vite, React,
 TypeScript, Tailwind v4 and shadcn/ui, and hosted on GitHub Pages.
 
-- **Live (pre-domain):** https://amyconnects.github.io/petasos-landing/
+- **Live (pre-domain):** https://charlotte298.github.io/Petasos-web/ (repo: [charlotte298/Petasos-web](https://github.com/charlotte298/Petasos-web))
 - **Design source of truth:** `designs/petasos-landing.pen` in the Marine insurance repo, frame
   `PdCYX` "Landing — Desktop". Section frames: Nav `pOplR`, Hero `wnjMa`, Pain Points `m5eab`,
   How It Works `AhemF`, Negotiation `l2xdQ`, Small Files `DEmUi`, Sample Letter `s6SRX3`,
@@ -17,7 +17,7 @@ TypeScript, Tailwind v4 and shadcn/ui, and hosted on GitHub Pages.
 ```bash
 pnpm install
 cp .env.example .env.local   # fill in what you need; everything is optional
-pnpm dev                     # http://localhost:5173/petasos-landing/
+pnpm dev                     # http://localhost:5173/Petasos-web/
 ```
 
 To exercise the forms without the real Sheet:
@@ -40,11 +40,11 @@ secrets.
 | `VITE_POSTHOG_KEY` | PostHog project API key (`phc_…`). Analytics are off when empty. | — |
 | `VITE_POSTHOG_HOST` | PostHog ingestion host | `https://us.i.posthog.com` |
 | `VITE_FORMS_ENDPOINT` | Apps Script web app `/exec` URL | — (forms show an error) |
-| `VITE_BASE` | Base path the site is served from | `/petasos-landing/` |
+| `VITE_BASE` | Base path the site is served from | `/Petasos-web/` |
 
 `VITE_SITE_URL` optionally overrides the absolute URL used in canonical and Open Graph tags.
 When it isn't set, the URL comes from `public/CNAME` if that file exists, and otherwise from
-`https://amyconnects.github.io` plus `VITE_BASE`.
+`https://charlotte298.github.io` plus `VITE_BASE`.
 
 ## Project layout
 
@@ -83,8 +83,9 @@ One-time setup:
    (see below).
 3. Push to `main`, or run the workflow by hand from the **Actions** tab.
 
-The repo is private. Pages from a private repo requires GitHub Team or Enterprise on the
-`amyconnects` org. **The published site is still public**: only the source stays private.
+The repo is public, which is what lets Pages run on a free GitHub account. (Pages from a
+private repo needs a paid plan.) Nothing secret lives in the repo: the three `VITE_` values
+are public and ship in the bundle anyway. The base path is case-sensitive: `/Petasos-web/`.
 
 `public/.nojekyll` stops Pages from running Jekyll over the build output.
 
@@ -95,10 +96,10 @@ The domain hasn't been chosen yet. When it is:
 1. **Add `public/CNAME`** containing just the domain, for example `petasos.example.com`. The
    build copies it into `dist/`, and the canonical and OG URLs pick it up automatically.
 2. **Set the repo variable `VITE_BASE=/`**, so assets load from the domain root instead of
-   `/petasos-landing/`.
+   `/Petasos-web/`.
 3. **Add DNS records** at the registrar:
    - **Subdomain** (for example `www.` or `petasos.`): a `CNAME` record pointing to
-     `amyconnects.github.io`.
+     `charlotte298.github.io`.
    - **Apex domain** (for example `example.com`): the four GitHub Pages `A` records, plus the
      four `AAAA` records for IPv6:
      - `A`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`

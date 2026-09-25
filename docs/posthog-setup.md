@@ -13,7 +13,7 @@ the console as `[analytics] …`.
    - `VITE_POSTHOG_KEY` = the `phc_…` key
    - `VITE_POSTHOG_HOST` = `https://us.i.posthog.com`
 3. In **Project settings**, find **Authorized URLs** (used by the toolbar and web analytics) and add
-   `https://amyconnects.github.io`. Add the custom domain as well once it's live.
+   `https://charlotte298.github.io`. Add the custom domain as well once it's live.
 
 Init settings, in `src/lib/analytics.ts`: autocapture on, pageview capture on,
 `person_profiles: "identified_only"`.

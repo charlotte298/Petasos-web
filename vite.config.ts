@@ -7,12 +7,12 @@ import { defineConfig, loadEnv } from 'vite'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  // GitHub Pages project site lives under /petasos-landing/. Set VITE_BASE=/ for a custom domain.
-  const base = env.VITE_BASE || '/petasos-landing/'
+  // GitHub Pages project site lives under /Petasos-web/. Set VITE_BASE=/ for a custom domain.
+  const base = env.VITE_BASE || '/Petasos-web/'
   // Absolute URL for canonical/OG tags: VITE_SITE_URL, else the domain in public/CNAME, else github.io.
   const cname = fs.existsSync('public/CNAME') ? fs.readFileSync('public/CNAME', 'utf8').trim() : ''
   const siteUrl = (
-    env.VITE_SITE_URL || (cname ? `https://${cname}/` : `https://amyconnects.github.io${base}`)
+    env.VITE_SITE_URL || (cname ? `https://${cname}/` : `https://charlotte298.github.io${base}`)
   ).replace(/\/?$/, '/')
   return {
     base,
