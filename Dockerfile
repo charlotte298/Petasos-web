@@ -13,7 +13,7 @@ COPY . .
 
 # Served from the domain root, not the GitHub Pages /Petasos-web/ subpath.
 ARG VITE_BASE=/
-# Absolute URL used for canonical and Open Graph tags, e.g. https://subrogation.amyconnects.ai/
+# Absolute URL used for canonical and Open Graph tags, e.g. https://www.amyconnects.ai/
 ARG VITE_SITE_URL=
 ARG VITE_POSTHOG_KEY=
 ARG VITE_POSTHOG_HOST=https://us.i.posthog.com

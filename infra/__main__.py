@@ -9,6 +9,10 @@ Two ways to attach the domain (config `domainMode`):
                 forwarding rules. Cloud Run only accepts traffic from the load balancer.
   mapping       Cloud Run domain mapping. No load balancer cost, but the account running
                 `pulumi up` must be a verified owner of the domain in Search Console.
+
+When `domain` starts with "www." and `redirectApex` is on (the default), the load balancer also
+serves the bare domain and 301-redirects it to www. Domain mappings can't do that, so in
+`mapping` mode the apex is left alone.
 """
 
 import pulumi
@@ -24,6 +28,10 @@ dns_zone = config.get("dnsZone") or "amyconnects"
 domain_mode = config.get("domainMode") or "loadbalancer"
 if domain_mode not in ("loadbalancer", "mapping"):
     raise ValueError(f"domainMode must be 'loadbalancer' or 'mapping', got {domain_mode!r}")
+redirect_apex = config.get_bool("redirectApex")
+apex = domain.removeprefix("www.") if domain.startswith("www.") else None
+if apex and redirect_apex is False:
+    apex = None
 service_name = config.get("serviceName") or "amy-landing"
 min_instances = config.get_int("minInstances") or 0
 max_instances = config.get_int("maxInstances") or 3
@@ -173,13 +181,34 @@ if domain_mode == "loadbalancer":
         ),
     )
 
-    https_map = gcp.compute.URLMap("https-map", name=f"{service_name}-https", default_service=backend.id)
+    # The bare domain (if any) gets a permanent redirect to the www host, keeping path and query.
+    to_www = gcp.compute.URLMapPathMatcherDefaultUrlRedirectArgs(
+        host_redirect=domain,
+        https_redirect=True,
+        strip_query=False,
+        redirect_response_code="MOVED_PERMANENTLY_DEFAULT",
+    )
+    apex_rules = (
+        {
+            "host_rules": [gcp.compute.URLMapHostRuleArgs(hosts=[apex], path_matcher="apex")],
+            "path_matchers": [gcp.compute.URLMapPathMatcherArgs(name="apex", default_url_redirect=to_www)],
+        }
+        if apex
+        else {}
+    )
 
+    https_map = gcp.compute.URLMap(
+        "https-map",
+        name=f"{service_name}-https",
+        default_service=backend.id,
+        **apex_rules,
+    )
+
+    # No explicit name: certificates are immutable, and an auto-generated name lets Pulumi
+    # create the replacement before deleting the old one when the domains change.
     cert = gcp.compute.ManagedSslCertificate(
         "cert",
-        # Certificate names are immutable; include the domain so changing it creates a new one.
-        name=f"{service_name}-{domain.replace('.', '-')}"[:63],
-        managed=gcp.compute.ManagedSslCertificateManagedArgs(domains=[domain]),
+        managed=gcp.compute.ManagedSslCertificateManagedArgs(domains=[domain, *([apex] if apex else [])]),
         opts=pulumi.ResourceOptions(depends_on=apis),
     )
 
@@ -200,7 +229,7 @@ if domain_mode == "loadbalancer":
         ip_protocol="TCP",
     )
 
-    # Plain HTTP redirects to HTTPS.
+    # Plain HTTP redirects to HTTPS (and the bare domain straight to https://www in one hop).
     redirect_map = gcp.compute.URLMap(
         "http-redirect",
         name=f"{service_name}-http-redirect",
@@ -209,6 +238,7 @@ if domain_mode == "loadbalancer":
             strip_query=False,
             redirect_response_code="MOVED_PERMANENTLY_DEFAULT",
         ),
+        **apex_rules,
     )
     http_proxy = gcp.compute.TargetHttpProxy("http-proxy", name=f"{service_name}-http", url_map=redirect_map.id)
     gcp.compute.GlobalForwardingRule(
@@ -229,6 +259,15 @@ if domain_mode == "loadbalancer":
         ttl=300,
         rrdatas=[ip.address],
     )
+    if apex:
+        gcp.dns.RecordSet(
+            "dns-apex",
+            managed_zone=dns_zone,
+            name=f"{apex}.",
+            type="A",
+            ttl=300,
+            rrdatas=[ip.address],
+        )
     pulumi.export("loadBalancerIp", ip.address)
 else:
     gcp.cloudrun.DomainMapping(

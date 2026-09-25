@@ -60,7 +60,7 @@ apps-script/Code.gs      the Sheet-bound web app
 scripts/mock-forms.mjs   local stand-in for the web app
 Dockerfile               builds the site and serves it with nginx on :8080
 docker/nginx.conf        caching, gzip, security headers, /healthz
-infra/                   Pulumi (Python) deployment to Cloud Run on an amyconnects.ai subdomain
+infra/                   Pulumi (Python) deployment to Cloud Run on www.amyconnects.ai
 ```
 
 Design tokens live in `src/index.css`. They follow the Amy Connects brand from the Amy app
@@ -98,7 +98,7 @@ on port 8080. The `VITE_` values are build args because Vite bakes them into the
 
 ```sh
 docker build -t amy-landing \
-  --build-arg VITE_SITE_URL=https://subrogation.amyconnects.ai/ \
+  --build-arg VITE_SITE_URL=https://www.amyconnects.ai/ \
   --build-arg VITE_POSTHOG_KEY=phc_... \
   --build-arg VITE_FORMS_ENDPOINT=https://script.google.com/macros/s/.../exec .
 docker run --rm -p 8080:8080 amy-landing   # http://localhost:8080, health check at /healthz
@@ -115,8 +115,9 @@ revalidates on every request so deploys show up immediately.
    Artifact Registry (`us-central1-docker.pkg.dev/amyconnects/amy-landing`).
 2. Deploys it to Cloud Run (`amy-landing`, scale to zero, max 3 instances) by image digest, so
    every build is a new revision.
-3. Puts it on `subrogation.amyconnects.ai` and creates the DNS record in the `amyconnects`
-   Cloud DNS zone.
+3. Puts it on `www.amyconnects.ai` and creates the DNS records in the `amyconnects` Cloud DNS
+   zone. In the default `loadbalancer` mode, the bare `amyconnects.ai` also points at the load
+   balancer and 301-redirects to `https://www.amyconnects.ai`, keeping the path and query.
 
 This uses **Cloud Run, not Cloud Functions.** Cloud Functions deploys source code, not a
 container image, and 2nd-gen functions run on Cloud Run underneath anyway. For a static site in
@@ -128,11 +129,12 @@ Set with `pulumi config set domainMode <mode>`:
 
 - **`loadbalancer`** (default): a global external HTTPS load balancer with a Google-managed
   certificate, Cloud CDN, and an HTTP→HTTPS redirect. Cloud Run only accepts traffic from the
-  load balancer. You don't need to verify domain ownership. It costs about $18/month for the
-  forwarding rules.
+  load balancer. It also handles the apex redirect. You don't need to verify domain ownership. It
+  costs about $18/month for the forwarding rules.
 - **`mapping`**: a Cloud Run domain mapping plus a `CNAME` to `ghs.googlehosted.com`. There's no
   load balancer cost, but the account running `pulumi up` must be a **verified owner** of
-  `amyconnects.ai` in Google Search Console (`gcloud domains verify amyconnects.ai`).
+  `amyconnects.ai` in Google Search Console (`gcloud domains verify amyconnects.ai`). This mode
+  doesn't redirect the bare domain.
 
 The Google-managed certificate goes active only after the DNS record resolves. That usually
 takes 15–60 minutes after the first `pulumi up`. Until then, HTTPS on the domain fails.
