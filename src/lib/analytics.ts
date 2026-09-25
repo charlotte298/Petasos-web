@@ -22,6 +22,9 @@ export function initAnalytics() {
         person_profiles: "identified_only",
         autocapture: true,
         capture_pageview: true,
+        // The PostHog project is shared with other Amy Connects surfaces, and its surveys (e.g. the
+        // "Feedback" popover) aren't meant for the landing page. This only affects this site.
+        disable_surveys: true,
       })
       ph = posthog
       queue.splice(0).forEach((fn) => fn(posthog))
