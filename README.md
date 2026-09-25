@@ -141,16 +141,26 @@ takes 15–60 minutes after the first `pulumi up`. Until then, HTTPS on the doma
 
 ### First deploy
 
+No `pulumi login` and no Pulumi Cloud account. `infra/Pulumi.yaml` points the state at a GCS
+bucket in the `amyconnects` project, and secrets in that state are encrypted with Cloud KMS.
+Everything uses your normal `gcloud` credentials.
+
 ```sh
 cd infra
-python3 -m venv venv && venv/bin/pip install -r requirements.txt
 gcloud auth application-default login          # Pulumi uses Application Default Credentials
-pulumi login                                   # or: pulumi login gs://<state-bucket>
-pulumi stack init prod                         # config lives in Pulumi.prod.yaml
+./bootstrap.sh                                 # once: state bucket, KMS key, "prod" stack
+git add Pulumi.prod.yaml && git commit -m "chore(infra): init prod stack"   # keep the KMS key lines
 pulumi config set posthogKey phc_...
 pulumi config set formsEndpoint https://script.google.com/macros/s/.../exec
 pulumi up
 ```
+
+`bootstrap.sh` is safe to re-run. It creates the private, versioned bucket
+`gs://amyconnects-pulumi-state` and the KMS key `pulumi/amy-landing`, then runs
+`pulumi stack init prod --secrets-provider gcpkms://…`. That writes `secretsprovider` and
+`encryptedkey` into `Pulumi.prod.yaml`, and anyone else deploying needs those lines, so commit
+them. After that, anyone with access to the bucket and the key can run `pulumi up`; nobody
+else needs the bootstrap.
 
 Redeploy after code changes by running `pulumi up` again. Docker must be running, because the
 image is built locally.
@@ -160,7 +170,9 @@ Other config (see `Pulumi.prod.yaml`): `domain`, `dnsZone`, `serviceName`, `minI
 
 The deploying account needs roughly these roles on the `amyconnects` project: Cloud Run Admin,
 Artifact Registry Administrator, DNS Administrator, Service Usage Admin, Service Account User,
-and (for the `loadbalancer` mode) Compute Load Balancer Admin. Making the service public
+(for the `loadbalancer` mode) Compute Load Balancer Admin, and for the state backend Storage
+Object Admin on the state bucket plus Cloud KMS CryptoKey Encrypter/Decrypter on the key. The
+bootstrap also needs Storage Admin and Cloud KMS Admin. Making the service public
 (`allUsers` gets `roles/run.invoker`) fails if an organization policy restricts public
 members.
 
