@@ -152,7 +152,7 @@ function LetterPreview() {
     <Card
       role="img"
       aria-label="Preview of a demand letter citing the Carmack Amendment, with a 30-day response deadline"
-      className="w-full max-w-[520px] -rotate-2 gap-3.5 rounded-none p-7 shadow-[0_20px_60px_#13202A22] sm:p-12"
+      className="w-full max-w-[520px] -rotate-2 gap-3.5 rounded-none p-7 shadow-[0_20px_60px_#1C171822] sm:p-12"
     >
       <p className="font-heading text-xl leading-[1.25] font-semibold text-foreground">
         RE: Subrogation demand, Claim No. 00-0000

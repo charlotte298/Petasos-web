@@ -233,7 +233,7 @@ export function Beta() {
             Join the <span className="whitespace-nowrap">design-partner</span> beta
           </SectionTitle>
           <p className="text-[17px] leading-[1.6] text-muted-foreground md:text-lg">
-            We're looking for subrogation teams to help shape Petasos
+            We're looking for subrogation teams to help shape Amy
           </p>
           <img
             src={team}

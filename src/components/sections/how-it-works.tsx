@@ -3,15 +3,15 @@ import { Section, SectionTitle } from "@/components/section"
 import { cn } from "@/lib/utils"
 
 const STEPS = [
-  { icon: Mail, title: "CC Petasos on the claim email.", body: "You don't need a new portal or a CRM." },
+  { icon: Mail, title: "CC Amy on the claim email.", body: "You don't need a new portal or a CRM." },
   {
     icon: ClipboardCheck,
-    title: "Petasos builds the package.",
+    title: "Amy builds the package.",
     body: "It chases missing documents and gives you a go or no-go with the reason.",
   },
   {
     icon: PhoneOutgoing,
-    title: "Petasos reports, demands and follows up.",
+    title: "Amy reports, demands and follows up.",
     body: "You're notified as soon as the other carrier replies.",
   },
 ]

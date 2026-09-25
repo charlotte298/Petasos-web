@@ -1,6 +1,6 @@
-# Petasos landing page
+# Amy landing page
 
-The marketing site for Petasos for Subrogation. It's a single static page built with Vite, React,
+The marketing site for Amy for Subrogation. It's a single static page built with Vite, React,
 TypeScript, Tailwind v4 and shadcn/ui, and hosted on GitHub Pages.
 
 - **Live (pre-domain):** https://charlotte298.github.io/Petasos-web/ (repo: [charlotte298/Petasos-web](https://github.com/charlotte298/Petasos-web))
@@ -93,12 +93,12 @@ are public and ship in the bundle anyway. The base path is case-sensitive: `/Pet
 
 The domain hasn't been chosen yet. When it is:
 
-1. **Add `public/CNAME`** containing just the domain, for example `petasos.example.com`. The
+1. **Add `public/CNAME`** containing just the domain, for example `amy.example.com`. The
    build copies it into `dist/`, and the canonical and OG URLs pick it up automatically.
 2. **Set the repo variable `VITE_BASE=/`**, so assets load from the domain root instead of
    `/Petasos-web/`.
 3. **Add DNS records** at the registrar:
-   - **Subdomain** (for example `www.` or `petasos.`): a `CNAME` record pointing to
+   - **Subdomain** (for example `www.` or `amy.`): a `CNAME` record pointing to
      `charlotte298.github.io`.
    - **Apex domain** (for example `example.com`): the four GitHub Pages `A` records, plus the
      four `AAAA` records for IPv6:

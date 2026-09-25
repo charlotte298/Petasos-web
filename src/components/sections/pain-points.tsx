@@ -50,7 +50,7 @@ function ChecklistCard() {
   return (
     <Card className="w-full gap-1 bg-background p-6 sm:p-9 md:w-[46%] md:shrink-0 xl:w-[560px]">
       <p className="text-sm leading-[17px] font-semibold tracking-[0.3px] text-muted-foreground">
-        Petasos checks every file against your checklist
+        Amy checks every file against your checklist
       </p>
       <ul className="mt-4">
         {CHECKS.map(({ ok, text }) => (
@@ -85,7 +85,7 @@ export function PainPoints() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-12">
           <SectionTitle className="max-w-[620px] leading-[1.05]">Subrogation can be an overcomplicated waste of time.</SectionTitle>
           <p className="max-w-[420px] text-[17px] leading-[1.5] text-muted-foreground md:text-lg">
-            Stop cannibalizing your subro adjuster's week. Petasos takes all three off the desk.
+            Stop cannibalizing your subro adjuster's week. Amy takes all three off the desk.
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export function PainPoints() {
             n={1}
             title="Chasing your insured client for documents"
             problem="Problem: The package arrives without proof of payment, a liability investigation or the other party's insurance details. Someone then spends a week of emails chasing them. Without them, you can't collect."
-            solution="The Solution: Petasos reads the file, emails the insured a list of exactly what's missing and keeps following up until it arrives. Each document is filed to the claim as it comes in."
+            solution="The Solution: Amy reads the file, emails the insured a list of exactly what's missing and keeps following up until it arrives. Each document is filed to the claim as it comes in."
           />
         </Row>
 
@@ -115,7 +115,7 @@ export function PainPoints() {
             n={3}
             title="Hours on the phone reporting the claim"
             problem="The Problem: Every carrier does intake differently. You could be spending hours talking to an AI chatbot over the phone, or a rep who doesn't particularly want to be there. Your team reads the same facts from the file to each one, then waits on hold for the next."
-            solution="The Solution: Petasos reports the claim to the adverse carrier using the facts already in your file. It then sends the demand and follows up every 10 days until the carrier replies. When it does, Petasos pauses and hands the file back to your adjuster."
+            solution="The Solution: Amy reports the claim to the adverse carrier using the facts already in your file. It then sends the demand and follows up every 10 days until the carrier replies. When it does, Amy pauses and hands the file back to your adjuster."
           />
           <Photo src={phone} alt="A call-center headset next to a laptop" />
         </Row>

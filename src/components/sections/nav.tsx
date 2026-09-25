@@ -1,6 +1,7 @@
 import { Menu } from "lucide-react"
 import { useRef, useState } from "react"
 import { CtaLink } from "@/components/cta-link"
+import { Logo } from "@/components/logo"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -19,8 +20,8 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-40 bg-background/95 px-4 backdrop-blur-sm supports-[backdrop-filter]:bg-background/85 sm:px-10 lg:px-20">
       <nav aria-label="Main" className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 py-4 md:py-6">
-        <a href="#top" aria-label="Petasos for Subrogation, back to top" className="flex items-center gap-2.5 rounded-sm">
-          <span className="font-heading text-[24px] leading-none font-semibold text-foreground md:text-[28px]">Petasos</span>
+        <a href="#top" aria-label="Amy for Subrogation, back to top" className="flex items-center gap-2.5 rounded-sm">
+          <Logo className="h-8 w-auto text-foreground md:h-9" />
           <Badge variant="outline" className="hidden sm:inline-flex">
             for Subrogation
           </Badge>
@@ -57,7 +58,7 @@ export function Nav() {
               }}
             >
               <SheetHeader>
-                <SheetTitle className="font-heading text-2xl font-semibold">Petasos</SheetTitle>
+                <SheetTitle className="font-heading text-2xl font-semibold">Amy</SheetTitle>
                 <SheetDescription className="sr-only">Jump to a section</SheetDescription>
               </SheetHeader>
               <ul className="flex flex-col px-4">

@@ -9,13 +9,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         // Accent fill. Uses the deeper accent so white labels clear WCAG AA.
-        default: "bg-primary-strong text-primary-foreground hover:bg-[#b23f1c]",
+        default: "bg-primary-strong text-primary-foreground hover:bg-[#a8341a]",
         // Hero secondary: 1.5px ink outline, no fill.
         outline:
           "border-[1.5px] border-foreground bg-transparent font-medium text-foreground hover:bg-foreground/5",
         // Accent fill on night sections; offset ring stays visible on the dark ground.
         onDark:
-          "bg-primary-strong text-primary-foreground hover:bg-[#b23f1c] focus-visible:outline-primary",
+          "bg-primary-strong text-primary-foreground hover:bg-[#a8341a] focus-visible:outline-primary",
         ghost: "text-foreground hover:bg-foreground/5",
         link: "text-primary underline-offset-4 hover:underline",
       },

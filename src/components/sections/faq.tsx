@@ -4,22 +4,22 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { track } from "@/lib/analytics"
 
 const FAQS = [
-  { q: "Do we have to switch systems?", a: "No. Petasos works over email. CC it on the claim thread." },
+  { q: "Do we have to switch systems?", a: "No. Amy works over email. CC it on the claim thread." },
   {
-    q: "Does Petasos negotiate settlements?",
-    a: "No. Petasos prepares, reports and follows up. Your adjusters negotiate.",
+    q: "Does Amy negotiate settlements?",
+    a: "No. Amy prepares, reports and follows up. Your adjusters negotiate.",
   },
   {
     q: "What if a file isn't ready?",
-    a: "Petasos tells you no and lists the missing items. It won't send a demand until the file is complete.",
+    a: "Amy tells you no and lists the missing items. It won't send a demand until the file is complete.",
   },
   {
-    q: "Which carriers can Petasos report to?",
-    a: "Any carrier. Petasos also checks whether the adverse carrier belongs to arbitration, so you know early whether the file can go to arbitration or would have to be litigated.",
+    q: "Which carriers can Amy report to?",
+    a: "Any carrier. Amy also checks whether the adverse carrier belongs to arbitration, so you know early whether the file can go to arbitration or would have to be litigated.",
   },
   {
-    q: "Is Petasos a law firm?",
-    a: "No. Petasos doesn't give legal advice, and your team reviews every demand before it goes out.",
+    q: "Is Amy a law firm?",
+    a: "No. Amy doesn't give legal advice, and your team reviews every demand before it goes out.",
   },
 ]
 
