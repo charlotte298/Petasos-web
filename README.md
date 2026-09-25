@@ -58,6 +58,9 @@ src/
   assets/                photos (WebP, 2× display size) — imported so the base path resolves
 apps-script/Code.gs      the Sheet-bound web app
 scripts/mock-forms.mjs   local stand-in for the web app
+Dockerfile               builds the site and serves it with nginx on :8080
+docker/nginx.conf        caching, gzip, security headers, /healthz
+infra/                   Pulumi (Python) deployment to Cloud Run on an amyconnects.ai subdomain
 ```
 
 Design tokens live in `src/index.css`. They follow the Amy Connects brand from the Amy app
@@ -87,6 +90,77 @@ private repo needs a paid plan.) Nothing secret lives in the repo: the three `VI
 are public and ship in the bundle anyway. The base path is case-sensitive: `/Petasos-web/`.
 
 `public/.nojekyll` stops Pages from running Jekyll over the build output.
+
+## Docker
+
+The `Dockerfile` builds the site with `VITE_BASE=/` and serves `dist/` from unprivileged nginx
+on port 8080. The `VITE_` values are build args because Vite bakes them into the bundle.
+
+```sh
+docker build -t amy-landing \
+  --build-arg VITE_SITE_URL=https://subrogation.amyconnects.ai/ \
+  --build-arg VITE_POSTHOG_KEY=phc_... \
+  --build-arg VITE_FORMS_ENDPOINT=https://script.google.com/macros/s/.../exec .
+docker run --rm -p 8080:8080 amy-landing   # http://localhost:8080, health check at /healthz
+```
+
+`/assets/*` (fingerprinted) is cached for a year. Everything else, including `index.html`,
+revalidates on every request so deploys show up immediately.
+
+## Deploying to Google Cloud (Cloud Run + Pulumi)
+
+`infra/` is a Pulumi Python project. One `pulumi up` does all of this:
+
+1. Builds the Dockerfile for `linux/amd64` (this works from Apple Silicon) and pushes it to
+   Artifact Registry (`us-central1-docker.pkg.dev/amyconnects/amy-landing`).
+2. Deploys it to Cloud Run (`amy-landing`, scale to zero, max 3 instances) by image digest, so
+   every build is a new revision.
+3. Puts it on `subrogation.amyconnects.ai` and creates the DNS record in the `amyconnects`
+   Cloud DNS zone.
+
+This uses **Cloud Run, not Cloud Functions.** Cloud Functions deploys source code, not a
+container image, and 2nd-gen functions run on Cloud Run underneath anyway. For a static site in
+a Docker image, Cloud Run is the right service.
+
+### Domain modes
+
+Set with `pulumi config set domainMode <mode>`:
+
+- **`loadbalancer`** (default): a global external HTTPS load balancer with a Google-managed
+  certificate, Cloud CDN, and an HTTP→HTTPS redirect. Cloud Run only accepts traffic from the
+  load balancer. You don't need to verify domain ownership. It costs about $18/month for the
+  forwarding rules.
+- **`mapping`**: a Cloud Run domain mapping plus a `CNAME` to `ghs.googlehosted.com`. There's no
+  load balancer cost, but the account running `pulumi up` must be a **verified owner** of
+  `amyconnects.ai` in Google Search Console (`gcloud domains verify amyconnects.ai`).
+
+The Google-managed certificate goes active only after the DNS record resolves. That usually
+takes 15–60 minutes after the first `pulumi up`. Until then, HTTPS on the domain fails.
+
+### First deploy
+
+```sh
+cd infra
+python3 -m venv venv && venv/bin/pip install -r requirements.txt
+gcloud auth application-default login          # Pulumi uses Application Default Credentials
+pulumi login                                   # or: pulumi login gs://<state-bucket>
+pulumi stack init prod                         # config lives in Pulumi.prod.yaml
+pulumi config set posthogKey phc_...
+pulumi config set formsEndpoint https://script.google.com/macros/s/.../exec
+pulumi up
+```
+
+Redeploy after code changes by running `pulumi up` again. Docker must be running, because the
+image is built locally.
+
+Other config (see `Pulumi.prod.yaml`): `domain`, `dnsZone`, `serviceName`, `minInstances`
+(set to 1 to avoid cold starts) and `maxInstances`.
+
+The deploying account needs roughly these roles on the `amyconnects` project: Cloud Run Admin,
+Artifact Registry Administrator, DNS Administrator, Service Usage Admin, Service Account User,
+and (for the `loadbalancer` mode) Compute Load Balancer Admin. Making the service public
+(`allUsers` gets `roles/run.invoker`) fails if an organization policy restricts public
+members.
 
 ## Switching to the custom domain
 

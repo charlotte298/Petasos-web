@@ -1,0 +1,16 @@
+.git
+.github
+node_modules
+dist
+infra
+designs
+scratch
+docs
+apps-script
+.env
+.env.*
+!.env.example
+*.pen
+*.log
+Dockerfile
+.dockerignore

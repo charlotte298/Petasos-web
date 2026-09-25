@@ -1,0 +1,7 @@
+name: amy-landing
+description: Amy landing page on Cloud Run, served on an amyconnects.ai subdomain
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
