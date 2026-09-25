@@ -4,7 +4,7 @@ The marketing site for Petasos for Subrogation. It's a single static page built 
 TypeScript, Tailwind v4 and shadcn/ui, and hosted on GitHub Pages.
 
 - **Live (pre-domain):** https://charlotte298.github.io/Petasos-web/ (repo: [charlotte298/Petasos-web](https://github.com/charlotte298/Petasos-web))
-- **Design source of truth:** `designs/petasos-landing.pen` in the Marine insurance repo, frame
+- **Design source of truth:** [`designs/petasos-landing.pen`](designs/) (open in [Pencil](https://pen.dev)), frame
   `PdCYX` "Landing — Desktop". Section frames: Nav `pOplR`, Hero `wnjMa`, Pain Points `m5eab`,
   How It Works `AhemF`, Negotiation `l2xdQ`, Small Files `DEmUi`, Sample Letter `s6SRX3`,
   Beta `SVUyc`, FAQ `hUfSA`, Final CTA `JhUMG`, Footer `yeeXc`.
