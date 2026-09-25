@@ -60,14 +60,13 @@ apps-script/Code.gs      the Sheet-bound web app
 scripts/mock-forms.mjs   local stand-in for the web app
 ```
 
-Design tokens live in `src/index.css`. They map the .pen variables onto shadcn's CSS variables
-(`--background` = bg, `--foreground` = ink, `--primary` = accent, and so on). Two tokens differ
-from the .pen on purpose, to meet WCAG AA:
+Design tokens live in `src/index.css`. They follow the Amy Connects brand from the Amy app
+(`amyconnects-infra`): background `#F4F2EE`, ink `#1C1718`, coral `#FF6B4A`, Poppins headings and
+DM Sans body text, mapped onto shadcn's CSS variables. Two tokens exist to meet WCAG AA:
 
-- `--primary-strong` `#C94A22` fills the accent buttons. White text on the design's `#E2572C`
-  is 3.7:1, and 15–17px labels need 4.5:1.
-- `--placeholder` `#6B757D` replaces the design's `#8A949C` placeholder color, which is 3.1:1 on
-  white.
+- `--primary-strong` `#C03C1C` fills buttons and colors small coral text. White text on Amy's
+  `#FF6B4A` is only 2.8:1, and 15–17px labels need 4.5:1.
+- `--placeholder` `#6B6464` is used for input placeholders (5.6:1 on the card color).
 
 ## Deploying
 
